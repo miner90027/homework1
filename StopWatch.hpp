@@ -7,7 +7,15 @@
 
 
 class StopWatch {
-
+public:
+	StopWatch();
+	const void Start();
+	const void Stop();
+	double GetTimeSec();
+	double GetTimeMilli();
+private:
+	double strtTime_;
+	double endTime_;
 };
 
 
