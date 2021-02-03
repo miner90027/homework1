@@ -23,10 +23,11 @@ using std::binary_search;
 using std::sort;
 using std::rotate;
 
-int randNumGen();
+int randNumGen(int min, int max);
 void sortAlg(long numEle);
 void shufAlg();
 void biSearch(long size);
+void rotateAlg(long size);
 
 vector<int> intVec;
 bool isSorted = false;
@@ -36,7 +37,7 @@ int main() {
 	//create a vector & fill it w/ 10 million random numbers
 	cout << "Generating vector of 10 million random numbers" << endl;
 	for (long i = 0; i < 10000000;i++) {
-		intVec.push_back(randNumGen());
+		intVec.push_back(randNumGen(0, 100));
 	}
 
 	/*
@@ -55,15 +56,11 @@ int main() {
 	}
 	 */
 
-	//run & time the rotate algorithm
-	StopWatch timer;
-	ofstream file("timeItRotate.txt", std::ios::app);
-	cout << "Rotating the vector."<< endl;
-	file << "Rotating the vector."<< endl;
-	timer.start();
-	rotate(intVec.begin(),intVec.begin()+5, intVec.begin() + 10);
-	timer.stop();
-	file << "Time to complete (milliseconds): " << timer.getTimeMilli()<< endl;
+	//rotates the vectors of diffrent sizes so that a random point between the begining & the chosen size is the new begining
+	for(long i = 10; i <= 10000000;i= i * 10)
+	{
+		rotateAlg(i);
+	}
 
 }
 //run & time sort algorithm on x elements in the vector 5 times & print results of each time
@@ -86,11 +83,11 @@ void sortAlg(long numEle)
 	file << endl;
 }
 
-//random number generator returns a random int between 0 & 100
-int randNumGen(){
+//random number generator returns a random int between a min value & max value
+int randNumGen(int min, int max){
 	random_device randDev;
 	mt19937 gen(randDev());
-	uniform_int_distribution<>dis(0,100);
+	uniform_int_distribution<>dis(min,max);
 	return dis(gen);
 }
 
@@ -125,7 +122,7 @@ void biSearch(long size) {
 
 	for(int i = 0; i < 5; i++){
 		timer.start();
-		isFound = binary_search(intVec.begin(),intVec.begin()+size, randNumGen());
+		isFound = binary_search(intVec.begin(),intVec.begin()+size, randNumGen(0,100));
 		timer.stop();
 		file << "Time to complete (milliseconds): "<< timer.getTimeMilli()<< endl;
 
@@ -136,4 +133,21 @@ void biSearch(long size) {
 	}
 	file << endl;
 
+}
+
+//run & time the rotate algorithm
+void rotateAlg(long size) {
+	StopWatch timer;
+	long midNum = randNumGen(1, size - 1);
+	ofstream file("timeItRotate.txt", std::ios::app);
+	cout << "Rotating a vector with a size of "<< size << endl;
+	file << "Rotating the vector with a size of "<< size << endl;
+	for(int i = 0; i < 5; i++)
+	{
+		timer.start();
+		rotate(intVec.begin(),intVec.begin() + midNum, intVec.begin() + size);
+		timer.stop();
+		file << "Time to complete (milliseconds): " << timer.getTimeMilli()<< endl;
+	}
+	file << endl;
 }
