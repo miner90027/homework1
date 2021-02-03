@@ -17,15 +17,24 @@ using std::endl;
 int randNumGen();
 
 int main() {
-	vector<int> intVec(10);
-	intVec.
 
+	vector<int> intVec;
+	for(int i = 0; i < 10;i++)
+	{
+		intVec.push_back(randNumGen());
+	}
+
+	//print out vector for debugging purposes
+	for(auto i: intVec)
+	{
+		cout << i << endl;
+	}
 }
 
+//random number generator returns a random int between 0 & 100
 int randNumGen(){
 	random_device randDev;
 	mt19937 gen(randDev());
 	uniform_int_distribution<>dis(0,100);
 	return dis(gen);
-
 }
