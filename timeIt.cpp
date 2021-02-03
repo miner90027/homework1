@@ -25,6 +25,7 @@ using std::binary_search;
 int randNumGen();
 void sortAlg(long numEle);
 void shufAlg();
+void biSearch(long size);
 
 
 vector<int> intVec;
@@ -45,19 +46,7 @@ int main() {
 	}
 	*/
 
-	//use a binary search to look for a random int in a vector of x size
-	cout << "Sorting vector before initiating binary search." << endl;
-	sort(intVec.begin(), intVec.end());	//must sort the entire vector before using binary search
-	bool isFound;
-	cout << "Initiating binary search for a random int."<< endl;
-	StopWatch timer;
-	isFound = binary_search(intVec.begin(),intVec.begin()+10, randNumGen());
-	timer.stop();
-	if(isFound)
-		cout<< "The number was found in "<< timer.getTimeMilli() << " milliseconds." << endl;
-	else
-		cout<< "The number was not found. It took "<< timer.getTimeMilli()<< " milliseconds to run" << endl;
-
+	biSearch(10);
 
 }
 //run & time sort algorithm on x elements in the vector 5 times & print results of each time
@@ -65,8 +54,8 @@ void sortAlg(long numEle)
 {
 	StopWatch counter;
 	ofstream file("timeItValSort.txt",std::ios::app);
-	file << "Sorting 5 vectors of " << numEle << " diffrent elements using sort\n";
-	cout << "Sorting 5 vectors of " << numEle<< " diffrent elements using sort\n";
+	file << "Sorting 5 vectors of " << numEle << " different elements using sort\n";
+	cout << "Sorting 5 vectors of " << numEle<< " different elements using sort\n";
 
 	for(int i = 0; i < 5; i++)
 	{
@@ -99,4 +88,32 @@ void shufAlg() {
 	shuffle (intVec.begin(), intVec.end(), default_random_engine(seed));
 	watch.stop();
 	file << "Time to complete (seconds): "<< watch.getTimeSec() << endl << endl;
+}
+
+//use a binary search to look for a random int in a vector of x size
+void biSearch(long size) {
+
+	cout << "Sorting vector before initiating binary search." << endl;
+	sort(intVec.begin(), intVec.end());	//must sort the entire vector before using binary search
+	bool isFound;
+	cout << "Searching for a random num in a vector of " << size << " different elements using binary_search 5 times."<< endl;
+	StopWatch timer;
+
+	ofstream file("timeItBiSearch.txt",std::ios::app);
+	file << "Searching for a random num in a vector of " << size << " different elements using binary_search 5 times.\n";
+
+	for(int i = 0; i < 5; i++){
+		timer.start();
+		isFound = binary_search(intVec.begin(),intVec.begin()+size, randNumGen());
+		timer.stop();
+		file << "Time to complete (milliseconds): "<< timer.getTimeMilli()<< endl;
+
+		if(isFound)
+			cout<< "The number was found in "<< timer.getTimeMilli() << " milliseconds." << endl;
+		else
+			cout<< "The number was not found. It took "<< timer.getTimeMilli()<< " milliseconds to run" << endl;
+	}
+	file << endl;
+
+
 }
