@@ -20,6 +20,7 @@ using std::ofstream;
 using std::chrono::system_clock;
 using std::shuffle;
 using std::default_random_engine;
+using std::binary_search;
 
 int randNumGen();
 void sortAlg(long numEle);
@@ -31,18 +32,31 @@ vector<int> intVec;
 int main() {
 
 	//create a vector & fill it w/ 10 million random numbers
+	cout << "Generating vector of 10 million random numbers" << endl;
 	for (long i = 0; i < 10000000;i++) {
 		intVec.push_back(randNumGen());
 	}
 
-
+	/*
 	//iterates through the vector by a factor of 10 & uses sort to sort each itteration
-	for(long i = 10; i < 10000000;i= i * 10)
+	for(long i = 10; i <= 10000000;i= i * 10)
 	{
 		sortAlg(i);
 	}
+	*/
 
-	//shufAlg();
+	//use a binary search to look for a random int in a vector of x size
+	cout << "Sorting vector before initiating binary search." << endl;
+	sort(intVec.begin(), intVec.end());	//must sort the entire vector before using binary search
+	bool isFound;
+	cout << "Initiating binary search for a random int."<< endl;
+	StopWatch timer;
+	isFound = binary_search(intVec.begin(),intVec.begin()+10, randNumGen());
+	timer.stop();
+	if(isFound)
+		cout<< "The number was found in "<< timer.getTimeMilli() << " milliseconds." << endl;
+	else
+		cout<< "The number was not found. It took "<< timer.getTimeMilli()<< " milliseconds to run" << endl;
 
 
 }
@@ -59,7 +73,7 @@ void sortAlg(long numEle)
 		counter.start();
 		sort(intVec.begin(), intVec.begin()+ numEle);
 		counter.stop();
-		file << "Time to complete (seconds): "<< counter.getTimeMilli() << endl;
+		file << "Time to complete (milliseconds): "<< counter.getTimeMilli() << endl;
 		//shuffle the vector so it can be sorted from scratch
 		shufAlg();
 	}
