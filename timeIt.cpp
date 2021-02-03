@@ -35,14 +35,14 @@ int main() {
 		intVec.push_back(randNumGen());
 	}
 
-	/*
+
 	//iterates through the vector by a factor of 10 & uses sort to sort each itteration
 	for(long i = 10; i < 10000000;i= i * 10)
 	{
 		sortAlg(i);
 	}
-	*/
-	shufAlg();
+
+	//shufAlg();
 
 
 }
@@ -54,13 +54,14 @@ void sortAlg(long numEle)
 	file << "Sorting 5 vectors of " << numEle << " diffrent elements using sort\n";
 	cout << "Sorting 5 vectors of " << numEle<< " diffrent elements using sort\n";
 
-	for(int i = 0, x = 0; i < 5; i++, x+=10)
+	for(int i = 0; i < 5; i++)
 	{
 		counter.start();
-		sort(intVec.begin() + x, intVec.begin() + x + numEle);
+		sort(intVec.begin(), intVec.begin()+ numEle);
 		counter.stop();
 		file << "Time to complete (seconds): "<< counter.getTimeMilli() << endl;
-
+		//shuffle the vector so it can be sorted from scratch
+		shufAlg();
 	}
 	file << endl;
 }
