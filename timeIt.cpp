@@ -4,6 +4,7 @@
  * 01/28/2021
  */
 #include <iostream>
+#include <fstream>
 #include <random>
 #include <algorithm>
 #include <vector>
@@ -15,6 +16,7 @@ using std::vector;
 using std::cout;
 using std::endl;
 using std::sort;
+using std::ofstream;
 
 int randNumGen();
 void sortAlg(int numEle);
@@ -29,8 +31,8 @@ int main() {
 		intVec.push_back(randNumGen());
 	}
 
-	sortAlg(10);
-
+	//sortAlg(10);
+	sortAlg(100);
 	//stop timer & print elapsed time for debuggin
 	/*
 	counter.stop();
@@ -49,28 +51,19 @@ int main() {
 
 void sortAlg(int numEle)
 {
+	ofstream file("timeItValSort.txt",std::ios::app);
+	file << "Sorting 5 vectors of " << numEle << " diffrent elements\n";
+	cout << "Sorting 5 vectors of " << numEle<< " diffrent elements\n";
 	//run & time sort algorithm on 10 elements in the vector 5 times & print results of each time
 	for(int i = 0, x = 0; i < 5; i++, x+=10)
 	{
-		/*
-		for(int y = x; y < x +10; y++)
-		{
-			cout << intVec.at(y) << ", ";
-		}
-		cout << endl;
-		*/
 		counter.start();
 		sort(intVec.begin() + x, intVec.begin() + x + numEle);
 		counter.stop();
-		cout << i << ": "<< counter.getTimeMilli() << endl;
-		/*
-		for(int y = x; y < x+10; y++)
-		{
-			cout << intVec.at(y) << ", ";
-		}
-		cout << endl;
-		*/
+		file << "Time to complete (milliseconds): "<< counter.getTimeMilli() << endl;
+
 	}
+	file << endl;
 }
 
 //random number generator returns a random int between 0 & 100
