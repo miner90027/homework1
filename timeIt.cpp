@@ -17,18 +17,20 @@ using std::endl;
 int randNumGen();
 
 int main() {
-
+	//create a vector & fill it w/ 1 million random numbers
 	vector<int> intVec;
-	for(int i = 0; i < 10;i++)
-	{
+	long million = 1000000;
+	for (long i = 0; i < million;i++) {
 		intVec.push_back(randNumGen());
 	}
 
 	//print out vector for debugging purposes
+	/*
 	for(auto i: intVec)
 	{
 		cout << i << endl;
 	}
+*/
 }
 
 //random number generator returns a random int between 0 & 100

@@ -4,7 +4,9 @@
 
 #ifndef HOMEWORK1_STOPWATCH_HPP
 #define HOMEWORK1_STOPWATCH_HPP
-
+#include <chrono>
+using std::chrono::system_clock;
+using std::chrono::time_point;
 
 class StopWatch {
 public:
@@ -14,8 +16,8 @@ public:
 	double GetTimeSec();
 	double GetTimeMilli();
 private:
-	double strtTime_;
-	double endTime_;
+	time_point<system_clock> strtTime_;
+	time_point<system_clock> endTime_;
 };
 
 

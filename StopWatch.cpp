@@ -17,18 +17,19 @@ StopWatch::StopWatch():endTime_() {
 }
 
 const void StopWatch::Start() {
-	//strtTime_ = system_clock::now();
+	strtTime_ = system_clock::now();
 }
 
 const void StopWatch::Stop() {
-	//endTime_ = system_clock::now();
+	endTime_ = system_clock::now();
 }
 
 double StopWatch::GetTimeSec() {
-
-	return 0;
+	auto timeDiff = endTime_ - strtTime_;
+	return duration<double>(timeDiff).count();
 }
 
 double StopWatch::GetTimeMilli() {
-	return 0;
+	auto timeDiff = endTime_ - strtTime_;
+	return duration<double,std::milli>(timeDiff).count();
 }
