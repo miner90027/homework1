@@ -17,11 +17,15 @@ using std::cout;
 using std::endl;
 using std::sort;
 using std::ofstream;
+using std::chrono::system_clock;
+using std::shuffle;
+using std::default_random_engine;
 
 int randNumGen();
-void sortAlg(int numEle);
+void sortAlg(long numEle);
+void shufAlg();
 
-StopWatch counter;
+
 vector<int> intVec;
 
 int main() {
@@ -31,36 +35,31 @@ int main() {
 		intVec.push_back(randNumGen());
 	}
 
-	//sortAlg(10);
-	sortAlg(100);
-	//stop timer & print elapsed time for debuggin
 	/*
-	counter.stop();
-	cout << counter.getTimeSec() << endl;
-	cout << counter.getTimeMilli() << endl;
-	*/
-
-	//print out vector for debugging purposes
-	/*
-	for(auto i: intVec)
+	//iterates through the vector by a factor of 10 & uses sort to sort each itteration
+	for(long i = 10; i < 10000000;i= i * 10)
 	{
-		cout << i << endl;
+		sortAlg(i);
 	}
-*/
-}
+	*/
+	shufAlg();
 
-void sortAlg(int numEle)
+
+}
+//run & time sort algorithm on x elements in the vector 5 times & print results of each time
+void sortAlg(long numEle)
 {
+	StopWatch counter;
 	ofstream file("timeItValSort.txt",std::ios::app);
-	file << "Sorting 5 vectors of " << numEle << " diffrent elements\n";
-	cout << "Sorting 5 vectors of " << numEle<< " diffrent elements\n";
-	//run & time sort algorithm on 10 elements in the vector 5 times & print results of each time
+	file << "Sorting 5 vectors of " << numEle << " diffrent elements using sort\n";
+	cout << "Sorting 5 vectors of " << numEle<< " diffrent elements using sort\n";
+
 	for(int i = 0, x = 0; i < 5; i++, x+=10)
 	{
 		counter.start();
 		sort(intVec.begin() + x, intVec.begin() + x + numEle);
 		counter.stop();
-		file << "Time to complete (milliseconds): "<< counter.getTimeMilli() << endl;
+		file << "Time to complete (seconds): "<< counter.getTimeMilli() << endl;
 
 	}
 	file << endl;
@@ -72,4 +71,17 @@ int randNumGen(){
 	mt19937 gen(randDev());
 	uniform_int_distribution<>dis(0,100);
 	return dis(gen);
+}
+
+//use shuffle to re-scramble the vector
+void shufAlg() {
+	StopWatch watch;
+	ofstream file("timeItShuffle.txt",std::ios::app);
+	cout<< "Re-shuffling the vector" << endl;
+	file << "Re-shuffling the vector\n";
+	watch.start();
+	unsigned seed = system_clock::now().time_since_epoch().count();
+	shuffle (intVec.begin(), intVec.end(), default_random_engine(seed));
+	watch.stop();
+	file << "Time to complete (seconds): "<< watch.getTimeSec() << endl << endl;
 }
