@@ -4,32 +4,29 @@
 
 #include "StopWatch.hpp"
 #include <chrono>
-#include <ctime>
-
 using std::chrono::steady_clock;
 using std::chrono::system_clock;
 using std::chrono::duration;
 
 
-
 StopWatch::StopWatch():endTime_() {
-	Start();
+	start();
 }
 
-const void StopWatch::Start() {
+void StopWatch::start() {
 	strtTime_ = system_clock::now();
 }
 
-const void StopWatch::Stop() {
+void StopWatch::stop() {
 	endTime_ = system_clock::now();
 }
 
-double StopWatch::GetTimeSec() {
+double StopWatch::getTimeSec() {
 	auto timeDiff = endTime_ - strtTime_;
 	return duration<double>(timeDiff).count();
 }
 
-double StopWatch::GetTimeMilli() {
+double StopWatch::getTimeMilli() {
 	auto timeDiff = endTime_ - strtTime_;
 	return duration<double,std::milli>(timeDiff).count();
 }

@@ -11,10 +11,10 @@ using std::chrono::time_point;
 class StopWatch {
 public:
 	StopWatch();
-	const void Start();
-	const void Stop();
-	double GetTimeSec();
-	double GetTimeMilli();
+	void start();
+	void stop();
+	double getTimeSec();
+	double getTimeMilli();
 private:
 	time_point<system_clock> strtTime_;
 	time_point<system_clock> endTime_;
