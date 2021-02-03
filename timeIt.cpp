@@ -40,21 +40,21 @@ int main() {
 		intVec.push_back(randNumGen(0, 100));
 	}
 
-	/*
+
 	//iterates through the vector by a factor of 10 & uses sort to sort each itteration
 	for(long i = 10; i <= 10000000;i= i * 10)
 	{
 		sortAlg(i);
 	}
-	*/
 
-	/*
+
+
 	//iterates through the vector by a factor of 10 & uses binary search to search each size for a random int
 	for(long i = 10; i <= 10000000;i= i * 10)
 	{
 		biSearch(i);
 	}
-	 */
+
 
 	//rotates the vectors of diffrent sizes so that a random point between the begining & the chosen size is the new begining
 	for(long i = 10; i <= 10000000;i= i * 10)
@@ -69,7 +69,7 @@ void sortAlg(long numEle)
 	StopWatch counter;
 	ofstream file("timeItValSort.txt",std::ios::app);
 	file << "Sorting 5 vectors of " << numEle << " different elements using sort\n";
-	cout << "Sorting 5 vectors of " << numEle<< " different elements using sort\n";
+	cout << "Sorting 5 vectors of " << numEle << " different elements using sort\n";
 
 	for(int i = 0; i < 5; i++)
 	{
@@ -95,7 +95,7 @@ int randNumGen(int min, int max){
 void shufAlg() {
 	StopWatch watch;
 	ofstream file("timeItShuffle.txt",std::ios::app);
-	cout<< "Re-shuffling the vector" << endl;
+	cout << "Re-shuffling the vector" << endl;
 	file << "Re-shuffling the vector\n";
 	watch.start();
 	unsigned seed = system_clock::now().time_since_epoch().count();
