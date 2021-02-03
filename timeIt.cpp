@@ -29,7 +29,7 @@ int main() {
 		intVec.push_back(randNumGen());
 	}
 
-
+	sortAlg(10);
 
 	//stop timer & print elapsed time for debuggin
 	/*
@@ -50,7 +50,6 @@ int main() {
 void sortAlg(int numEle)
 {
 	//run & time sort algorithm on 10 elements in the vector 5 times & print results of each time
-
 	for(int i = 0, x = 0; i < 5; i++, x+=10)
 	{
 		/*
@@ -61,7 +60,7 @@ void sortAlg(int numEle)
 		cout << endl;
 		*/
 		counter.start();
-		sort(intVec.begin() + x, intVec.begin() + x + 10);
+		sort(intVec.begin() + x, intVec.begin() + x + numEle);
 		counter.stop();
 		cout << i << ": "<< counter.getTimeMilli() << endl;
 		/*
