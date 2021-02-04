@@ -9,6 +9,7 @@
 #include <algorithm>
 #include <vector>
 #include "StopWatch.hpp"
+#include <sstream>
 using std::random_device;
 using std::mt19937;
 using std::uniform_int_distribution;
@@ -34,35 +35,35 @@ bool isSorted = false;
 
 int main() {
 
-	//create a vector & fill it w/ 10 million random numbers
-	cout << "Generating vector of 10 million random numbers" << endl;
-	for (long i = 0; i < 10000000;i++) {
+	long vecSize = 100000000;
+	//create a vector & fill it w/ 100 million random numbers
+	cout << "Generating vector of "<< vecSize <<" random numbers" << endl;
+	for (long i = 0; i < vecSize;i++) {
 		intVec.push_back(randNumGen(0, 100));
 	}
 
-
-	//iterates through the vector by a factor of 10 & uses sort to sort each itteration
-	for(long i = 10; i <= 10000000;i= i * 10)
+	//iterates through the vector by a factor of 10 & uses sort to sort each iteration
+	for(long i = 10; i <= vecSize;i= i * 10)
 	{
 		sortAlg(i);
 	}
 
-
-
 	//iterates through the vector by a factor of 10 & uses binary search to search each size for a random int
-	for(long i = 10; i <= 10000000;i= i * 10)
+	for(long i = 10; i <= vecSize;i= i * 10)
 	{
 		biSearch(i);
 	}
 
-
-	//rotates the vectors of diffrent sizes so that a random point between the begining & the chosen size is the new begining
-	for(long i = 10; i <= 10000000;i= i * 10)
+	//rotates the vectors of different sizes so that a random point between the beginning & the chosen size is the new beginning
+	for(long i = 10; i <= vecSize;i= i * 10)
 	{
 		rotateAlg(i);
 	}
 
+
+
 }
+
 //run & time sort algorithm on x elements in the vector 5 times & print results of each time
 void sortAlg(long numEle)
 {
