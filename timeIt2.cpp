@@ -39,7 +39,7 @@ void rotateAlg(long size);
 
 bool isSorted = false;
 */
-void fillVec(ifstream &fileIn, vector<string> &vec, StopWatch &time);
+void fillVec(ifstream &fileIn, vector<string> &vec, ofstream &fileOut);
 
 int main() {
 	//receive all of the text files
@@ -62,12 +62,8 @@ int main() {
 		return -1;
 	}
 
-	//init all of the stop watches
-	StopWatch aliceTime;
-	StopWatch wizTime;
-	StopWatch warTime;
-	StopWatch gatTime;
-	StopWatch sherTime;
+	//init a Stopwatch to
+	StopWatch timer;
 
 	//init all of the containers
 	vector<string> aliceVec;
@@ -80,30 +76,27 @@ int main() {
 	//temp sting variable used for filling containers
 	string temp;
 	//fill list
-	warTime.start();
+	timer.start();
 	while(getline(warOWorlds, temp))
 	{
 		warList.push_back(temp);
 	}
-	warTime.stop();
+	timer.stop();
+	warOut << "Stored in a list in (milliseconds):" << timer.getTimeMilli() << endl;
+
 	//fill queue
-	sherTime.start();
+	timer.start();
 	while(getline(sherlock, temp))
 	{
 		sherQue.push(temp);
 	}
-	sherTime.stop();
-	//fill vectors
-	fillVec(alice, aliceVec, aliceTime);
-	fillVec(wizOz, wizVec, wizTime);
-	fillVec(greatGat, gatVec, gatTime);
+	timer.stop();
+	sherOut << "Stored in a queue in (milliseconds):" << timer.getTimeMilli() << endl;
 
-	//write out the storage times to their respective files
-	aliceOut << "Stored in a vector in (milliseconds):" << aliceTime.getTimeMilli() << endl;
-	wizOut << "Stored in a vector in (milliseconds):" << wizTime.getTimeMilli() << endl;
-	gatOut << "Stored in a vector in (milliseconds):" << gatTime.getTimeMilli() << endl;
-	warOut << "Stored in a list in (milliseconds):" << warTime.getTimeMilli() << endl;
-	sherOut << "Stored in a queue in (milliseconds):" << sherTime.getTimeMilli() << endl;
+	//fill & time
+	fillVec(alice, aliceVec,aliceOut);
+	fillVec(wizOz, wizVec, wizOut);
+	fillVec(greatGat, gatVec, gatOut);
 
 
 /*
@@ -116,10 +109,10 @@ int main() {
 }
 
 //fills & times the vectors
-void fillVec(ifstream &fileIn, vector<string> &vec, StopWatch &time) {
+void fillVec(ifstream &fileIn, vector<string> &vec, ofstream &fileOut) {
 	//temp sting variable used for filling containers
 	string temp;
-
+	StopWatch time;
 	//time & fill all containers
 	time.start();
 	while(getline(fileIn, temp))
@@ -127,6 +120,7 @@ void fillVec(ifstream &fileIn, vector<string> &vec, StopWatch &time) {
 		vec.push_back(temp);
 	}
 	time.stop();
+	fileOut << "Stored in a vector in (milliseconds):" << time.getTimeMilli() << endl;
 }
 
 /*
