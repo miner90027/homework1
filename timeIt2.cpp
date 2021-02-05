@@ -5,6 +5,7 @@
  */
 #include <iostream>
 #include <fstream>
+#include <string>
 #include <random>
 #include <algorithm>
 #include <vector>
@@ -16,51 +17,58 @@ using std::default_random_engine;
 using std::vector;
 using std::cout;
 using std::endl;
+using std::string;
+using std::getline;
 using std::ofstream;
+using std::ifstream;
 using std::chrono::system_clock;
 using std::shuffle;
 using std::binary_search;
 using std::sort;
 using std::rotate;
-
+/*
 int randNumGen(int min, int max);
 void sortAlg(long numEle);
 void shufAlg();
 void biSearch(long size);
 void rotateAlg(long size);
 
-vector<int> intVec;
 bool isSorted = false;
+*/
+
+
 
 int main() {
+	ifstream sherlock("projectGutenbergBooks/sherlockHolmes.txt");
+	ifstream warOWorlds("projectGutenbergBooks/warOfTheWorlds.txt");
+	ifstream greatGat("projectGutenbergBooks/theGreatGatsby.txt");
+	ifstream wizOz("projectGutenbergBooks/wizardOfOz.txt");
+	ifstream alice("projectGutenbergBooks/alice&Wonderland.txt");
 
-	long vecSize = 100000000;
-	//create a vector & fill it w/ 100 million random numbers
-	cout << "Generating vector of "<< vecSize <<" random numbers" << endl;
-	for (long i = 0; i < vecSize;i++) {
-		intVec.push_back(randNumGen(0, 100));
+	if(!sherlock || !warOWorlds || !greatGat || !wizOz || !alice) {
+		cout << "A file was not found." << endl;
+		return -1;
 	}
 
-	//iterates through the vector by a factor of 10 & uses sort to sort each iteration
-	for(long i = 10; i <= vecSize;i= i * 10)
+	vector<string> aliceVec;
+	string temp;
+
+	while(getline(alice, temp))
 	{
-		sortAlg(i);
+		aliceVec.push_back(temp);
 	}
 
-	//iterates through the vector by a factor of 10 & uses binary search to search each size for a random int
-	for(long i = 10; i <= vecSize;i= i * 10)
-	{
-		biSearch(i);
-	}
 
-	//rotates the vectors of different sizes so that a random point between the beginning & the chosen size is the new beginning
-	for(long i = 10; i <= vecSize;i= i * 10)
+	/*
+	string test;
+	while(getline(alice, test))
 	{
-		rotateAlg(i);
+		cout << test << "\n";
 	}
+*/
 
 }
-
+/*
 //run & time sort algorithm on x elements in the vector 5 times & print results of each time
 void sortAlg(long numEle)
 {
@@ -149,3 +157,4 @@ void rotateAlg(long size) {
 	}
 	file << endl;
 }
+*/
