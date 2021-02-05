@@ -9,12 +9,16 @@
 #include <random>
 #include <algorithm>
 #include <vector>
+#include <list>
+#include <queue>
 #include "StopWatch.hpp"
 using std::random_device;
 using std::mt19937;
 using std::uniform_int_distribution;
 using std::default_random_engine;
 using std::vector;
+using std::list;
+using std::queue;
 using std::cout;
 using std::endl;
 using std::string;
@@ -35,39 +39,96 @@ void rotateAlg(long size);
 
 bool isSorted = false;
 */
-
-
+void fillVec(ifstream &fileIn, vector<string> &vec, StopWatch &time);
 
 int main() {
+	//receive all of the text files
 	ifstream sherlock("projectGutenbergBooks/sherlockHolmes.txt");
 	ifstream warOWorlds("projectGutenbergBooks/warOfTheWorlds.txt");
 	ifstream greatGat("projectGutenbergBooks/theGreatGatsby.txt");
 	ifstream wizOz("projectGutenbergBooks/wizardOfOz.txt");
 	ifstream alice("projectGutenbergBooks/alice&Wonderland.txt");
 
+	//init the output files for each book
+	ofstream sherOut("sherOut.txt",std::ios::app);
+	ofstream warOut("warOut.txt",std::ios::app);
+	ofstream gatOut("gatOut.txt",std::ios::app);
+	ofstream wizOut("wizOut.txt",std::ios::app);
+	ofstream aliceOut("aliceOut.txt",std::ios::app);
+
+	//check to make sure that all of the files can be opened
 	if(!sherlock || !warOWorlds || !greatGat || !wizOz || !alice) {
 		cout << "A file was not found." << endl;
 		return -1;
 	}
 
+	//init all of the stop watches
+	StopWatch aliceTime;
+	StopWatch wizTime;
+	StopWatch warTime;
+	StopWatch gatTime;
+	StopWatch sherTime;
+
+	//init all of the containers
 	vector<string> aliceVec;
+	vector<string> wizVec;
+	vector<string> gatVec;
+	list<string> warList;
+	queue<string> sherQue;
+
+	//fill all of the containers
+	//temp sting variable used for filling containers
 	string temp;
-
-	while(getline(alice, temp))
+	//fill list
+	warTime.start();
+	while(getline(warOWorlds, temp))
 	{
-		aliceVec.push_back(temp);
+		warList.push_back(temp);
 	}
-
-
-	/*
-	string test;
-	while(getline(alice, test))
+	warTime.stop();
+	//fill queue
+	sherTime.start();
+	while(getline(sherlock, temp))
 	{
-		cout << test << "\n";
+		sherQue.push(temp);
+	}
+	sherTime.stop();
+	//fill vectors
+	fillVec(alice, aliceVec, aliceTime);
+	fillVec(wizOz, wizVec, wizTime);
+	fillVec(greatGat, gatVec, gatTime);
+
+	//write out the storage times to their respective files
+	aliceOut << "Stored in a vector in (milliseconds):" << aliceTime.getTimeMilli() << endl;
+	wizOut << "Stored in a vector in (milliseconds):" << wizTime.getTimeMilli() << endl;
+	gatOut << "Stored in a vector in (milliseconds):" << gatTime.getTimeMilli() << endl;
+	warOut << "Stored in a list in (milliseconds):" << warTime.getTimeMilli() << endl;
+	sherOut << "Stored in a queue in (milliseconds):" << sherTime.getTimeMilli() << endl;
+
+
+/*
+ 	//test print a vector
+	for(auto i: aliceVec)
+	{
+		cout << i << "\n";
 	}
 */
-
 }
+
+//fills & times the vectors
+void fillVec(ifstream &fileIn, vector<string> &vec, StopWatch &time) {
+	//temp sting variable used for filling containers
+	string temp;
+
+	//time & fill all containers
+	time.start();
+	while(getline(fileIn, temp))
+	{
+		vec.push_back(temp);
+	}
+	time.stop();
+}
+
 /*
 //run & time sort algorithm on x elements in the vector 5 times & print results of each time
 void sortAlg(long numEle)
