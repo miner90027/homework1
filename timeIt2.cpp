@@ -103,7 +103,15 @@ int main() {
 	fillVec(wizOz, wizVec, wizOut);
 	fillVec(greatGat, gatVec, gatOut);
 
+	//sort vectors
 	sortAlg(aliceVec, aliceOut);
+	sortAlg(wizVec, wizOut);
+	sortAlg(gatVec, gatOut);
+	//sort list
+	timer.start();
+	warList.sort();
+	timer.stop();
+	warOut << "List native sort function time (milliseconds): " << timer.getTimeMilli() << endl;
 
 }
 
