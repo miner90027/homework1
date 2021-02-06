@@ -32,14 +32,19 @@ using std::sort;
 using std::rotate;
 /*
 int randNumGen(int min, int max);
-void sortAlg(long numEle);
+
 void shufAlg();
 void biSearch(long size);
 void rotateAlg(long size);
 
 bool isSorted = false;
 */
+void sortAlg(vector<string> &vec, ofstream &fileOut);
+
 void fillVec(ifstream &fileIn, vector<string> &vec, ofstream &fileOut);
+void printVec(const vector<string> &vec);
+void printList(const list<string> &lis);
+void printQue(const list<string> &que);
 
 int main() {
 	//receive all of the text files
@@ -62,7 +67,7 @@ int main() {
 		return -1;
 	}
 
-	//init a Stopwatch to
+	//init a Stopwatch
 	StopWatch timer;
 
 	//init all of the containers
@@ -93,19 +98,13 @@ int main() {
 	timer.stop();
 	sherOut << "Stored in a queue in (milliseconds):" << timer.getTimeMilli() << endl;
 
-	//fill & time
+	//fill & time vectors
 	fillVec(alice, aliceVec,aliceOut);
 	fillVec(wizOz, wizVec, wizOut);
 	fillVec(greatGat, gatVec, gatOut);
 
+	sortAlg(aliceVec, aliceOut);
 
-/*
- 	//test print a vector
-	for(auto i: aliceVec)
-	{
-		cout << i << "\n";
-	}
-*/
 }
 
 //fills & times the vectors
@@ -123,27 +122,30 @@ void fillVec(ifstream &fileIn, vector<string> &vec, ofstream &fileOut) {
 	fileOut << "Stored in a vector in (milliseconds):" << time.getTimeMilli() << endl;
 }
 
-/*
-//run & time sort algorithm on x elements in the vector 5 times & print results of each time
-void sortAlg(long numEle)
-{
-	StopWatch counter;
-	ofstream file("timeItValSort.txt",std::ios::app);
-	file << "Sorting 5 vectors of " << numEle << " different elements using sort\n";
-	cout << "Sorting 5 vectors of " << numEle << " different elements using sort\n";
-
-	for(int i = 0; i < 5; i++)
-	{
-		counter.start();
-		sort(intVec.begin(), intVec.begin()+ numEle);
-		counter.stop();
-		file << "Time to complete (milliseconds): "<< counter.getTimeMilli() << endl;
-		//shuffle the vector so it can be sorted from scratch
-		shufAlg();
-	}
-	file << endl;
+//print functions for debugging
+void printVec(const vector<string> &vec) {
+	for(auto i: vec)
+		cout << i << "\n";
+}
+void printList(const list<string> &lis) {
+	for(auto i: lis)
+		cout << i << "\n";
+}
+void printQue(const list<string> &que) {
+	for(auto i: que)
+		cout << i << "\n";
 }
 
+//run & time sort algorithm on
+void sortAlg(vector<string> &vec, ofstream &fileOut)
+{
+	StopWatch timer;
+	sort(vec.begin(), vec.end());
+	timer.stop();
+	fileOut << "Sorted in (milliseconds): " << timer.getTimeMilli() << endl;
+}
+
+/*
 //random number generator returns a random int between a min value & max value
 int randNumGen(int min, int max){
 	random_device randDev;

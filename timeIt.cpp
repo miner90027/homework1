@@ -25,7 +25,7 @@ using std::rotate;
 
 int randNumGen(int min, int max);
 void sortAlg(long numEle);
-void shufAlg();
+void shufAlg(long size);
 void biSearch(long size);
 void rotateAlg(long size);
 
@@ -76,7 +76,7 @@ void sortAlg(long numEle)
 		counter.stop();
 		file << "Time to complete (milliseconds): "<< counter.getTimeMilli() << endl;
 		//shuffle the vector so it can be sorted from scratch
-		shufAlg();
+		shufAlg(numEle);
 	}
 	file << endl;
 }
@@ -90,14 +90,14 @@ int randNumGen(int min, int max){
 }
 
 //use shuffle to re-scramble the vector
-void shufAlg() {
+void shufAlg(long size) {
 	StopWatch watch;
 	ofstream file("timeItShuffle.txt",std::ios::app);
-	cout << "Re-shuffling the vector" << endl;
-	file << "Re-shuffling the vector\n";
+	cout << "Re-shuffling the vector size " << size << endl;
+	file << "Re-shuffling the vector size " << size << endl;
 	watch.start();
 	unsigned seed = system_clock::now().time_since_epoch().count();
-	shuffle (intVec.begin(), intVec.end(), default_random_engine(seed));
+	shuffle (intVec.begin(), intVec.begin() + size, default_random_engine(seed));
 	watch.stop();
 	file << "Time to complete (seconds): "<< watch.getTimeSec() << endl << endl;
 }
