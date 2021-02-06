@@ -3,9 +3,6 @@
  * Homework 1
  * 01/28/2021
  */
-#include <iostream>
-using std::cout;
-using std::endl;
 
 char* strdup(const char*);
 char* findx(const char* s, const char* x);
@@ -17,7 +14,6 @@ int main(){
 
 	temp = findx(cstr, "char");
 
-	cout << temp << endl;
 }
 
 char* strdup(const char* orig){
@@ -68,5 +64,5 @@ char* findx(const char* s, const char* x){
 		}
 	}
 
-	return nullptr_t();
+	return '\0';
 }
