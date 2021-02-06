@@ -4,23 +4,30 @@
  * 01/28/2021
  */
 #include <iostream>
-#include <string>
 using std::cout;
 using std::endl;
-using std::string;
 
 char* strdup(const char*);
 char* findx(const char* s, const char* x);
 
 int main(){
-	string data = "How many chars are on the screen";
-	const char *cstr = data.c_str();
-	cout<< strdup(cstr) << endl;
 
+	const char *cstr = "How many chars are on the screen";
+	auto temp = strdup(cstr);
+
+	temp = findx(cstr, "char");
+
+	cout << temp << endl;
 }
 
 char* strdup(const char* orig){
-	int size = strlen(orig) + 1;
+	int size = 0;
+
+	do
+	{
+		size++;
+	}
+	while (orig[size]);
 
 	char *copy;
 	copy = new char[size];
@@ -32,6 +39,34 @@ char* strdup(const char* orig){
 }
 
 char* findx(const char* s, const char* x){
-	char* z;
-	return z;
+	int sizeS = 0;
+	int sizeX = 0;
+
+	while(s[sizeS])
+		sizeS++;
+
+	while(x[sizeX])
+		sizeX++;
+
+	int j;
+	for(int i = 0; i < sizeS;i++)
+	{
+		if(s[i] == x[0])
+		{
+			for(j = 0; j<sizeX;j++)
+			{
+				if(s[i +j] != x[j])
+				{
+					break;
+				}
+			}
+
+			if(j==sizeX)
+			{
+				return (char *)&s[i];
+			}
+		}
+	}
+
+	return nullptr_t();
 }
